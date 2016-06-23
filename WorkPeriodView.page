@@ -1,11 +1,16 @@
-<apex:page controller="NewCustomController">
-    <apex:form id="changePrivacyForm">
+<apex:page controller="WorkPeriodController">
+    
+    <apex:form >
         <apex:pageBlock >
-             <apex:pageBlockTable value="{!wrap}"  var="item">
-                 <apex:column value="{!item.name}"/>
-                 <apex:column headerValue="Microsoft" value="{!item.outMessage1}" />               
-                 <apex:column headerValue="Apple" value="{!item.outMessage2}"/>
-            </apex:pageBlockTable>
+             <apex:pageBlockTable columns="{!countCompanies + 1}" value="{!workPeriodList}" var="item" >
+                 <apex:column value="{!item.name}" headerValue=""/>
+                 <apex:repeat value="{!companies}" var="comp">
+                     <apex:column headerValue="{!comp}" style="border: 0.1px solid black">
+                         <apex:outputText value="{!IF(item.Order__r.Account__r.Name==comp, 'Revenue:'+ Text(item.Rate__r.Customer_Rate__c), '')}"/><br/>
+                     	<apex:outputText value="{!IF(item.Order__r.Account__r.Name==comp, 'Margin:'+ Text(item.Rate__r.Employer_Rate__c), '')}"/>
+                     </apex:column>
+                 </apex:repeat>
+             </apex:pageBlockTable>
         </apex:pageBlock>
     </apex:form>
 </apex:page>
